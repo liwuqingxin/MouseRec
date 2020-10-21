@@ -1,0 +1,30 @@
+﻿<Window x:Class="Mouser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mouser"
+        mc:Ignorable="d"
+        Topmost="True"
+        Title="MainWindow" Height="120" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1"/>
+
+        <Button x:Name="BtnStart" Grid.Column="0" Grid.Row="1" Content="Start" Click="BtnStart_OnClick"/>
+        <Button x:Name="BtnEnd"   Grid.Column="1" Grid.Row="1" Content="End" Click="BtnEnd_OnClick"/>
+        <Button x:Name="BtnPlay"  Grid.Column="2" Grid.Row="1" Content="Play" Click="BtnPlay_OnClick"/>
+
+        <TextBlock x:Name="TbkInfo" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+    </Grid>
+</Window>

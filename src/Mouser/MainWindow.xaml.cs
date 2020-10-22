@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Mouser.Models;
@@ -37,7 +38,10 @@ namespace Mouser
             _mouseHook.OnMouseActivity += OnMouseActivity;
             this.Closing += OnClosing;
 
+            Win32Helper.SetWindowTransparent(_mask);
+
             _mask.Show();
+            _mask.Top = -100000;
         }
 
         private void OnClosing(object sender, CancelEventArgs args)
@@ -154,7 +158,7 @@ namespace Mouser
                     if (_stopPlaying) return;
 
                     // 模拟移动
-                    var point = ScreenUtil.TransformPxToDx(t.Point);
+                    var point = Win32Helper.TransformPxToDx(t.Point);
                     if (point != null)
                     {
                         MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_ABSOLUTE | MouseSimulator.MOUSEEVENTF_MOVE, point.Value.X, point.Value.Y, 0, 0);
@@ -166,51 +170,51 @@ namespace Mouser
                             if (t.MouseButton == MouseButtons.Left)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftUp, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             else if (t.MouseButton == MouseButtons.Right)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftUp, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             else if (t.MouseButton == MouseButtons.Middle)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_MIDDLEUP, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftUp, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             break;
                         case ActionTypes.Down:
                             if (t.MouseButton == MouseButtons.Left)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             else if (t.MouseButton == MouseButtons.Right)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             else if (t.MouseButton == MouseButtons.Middle)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_MIDDLEDOWN, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             break;
                         case ActionTypes.Click:
                             if (t.MouseButton == MouseButtons.Left)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             else if (t.MouseButton == MouseButtons.Right)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             else if (t.MouseButton == MouseButtons.Middle)
                             {
                                 MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_MIDDLEDOWN, 0, 0, 0, 0);
-                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                                _mask.ShowClick(_mask.ClickIndicator, t.Point);
                             }
                             break;
                         case ActionTypes.DClick:
@@ -224,8 +228,7 @@ namespace Mouser
         private void StopPlaying()
         {
             _stopPlaying = true;
-            Canvas.SetLeft(_mask.EffectLeftUp, -10000);
-            Canvas.SetLeft(_mask.EffectLeftDown, -10000);
+            _mask.Top = -100000;
         }
 
         #endregion

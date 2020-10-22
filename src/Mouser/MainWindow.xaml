@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Topmost="True"
         Title="Mouser" Height="120" Width="400">
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>

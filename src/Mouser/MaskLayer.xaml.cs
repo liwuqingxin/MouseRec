@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Mouser.Utils;
 using Point = System.Drawing.Point;
@@ -27,7 +16,7 @@ namespace Mouser
     {
         private readonly double _sx;
         private readonly double _sy;
-        private readonly DoubleAnimation _animation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromMilliseconds(500)), FillBehavior.HoldEnd)
+        private readonly DoubleAnimation _animation = new DoubleAnimation(0.3, 1, new Duration(TimeSpan.FromMilliseconds(500)), FillBehavior.HoldEnd)
         {
             EasingFunction = new QuinticEase()
             {
@@ -51,13 +40,16 @@ namespace Mouser
         /// <param name="position"></param>
         public void ShowClick(FrameworkElement element, Point position)
         {
-            var top  = position.Y / _sy - element.Height / 2 - SystemParameters.VirtualScreenTop;
-            var left = position.X / _sx - element.Width / 2 - SystemParameters.VirtualScreenLeft;
-            Canvas.SetTop(element, top);
-            Canvas.SetLeft(element, left);
+            Top = position.Y / _sy - this.Height / 2;
+            Left = position.X / _sx - this.Width / 2;
 
             element.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, _animation);
             element.RenderTransform.BeginAnimation(ScaleTransform.ScaleYProperty, _animation);
+        }
+
+        private void ClickIndicator_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("");
         }
     }
 }

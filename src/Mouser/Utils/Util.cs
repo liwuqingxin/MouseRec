@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+
 
 namespace Mouser.Utils
 {
@@ -50,6 +55,53 @@ namespace Mouser.Utils
                 case 192: return 2;
             }
             return 1;
+        }
+
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static string OpenFile(out string fileName)
+        {
+            fileName = null;
+
+            var openFile = new OpenFileDialog { Filter = "Files (*.json)|*.json|All Files (*.*)|*.*" };
+
+            if (openFile.ShowDialog() == true)
+            {
+                try
+                {
+                    fileName = openFile.FileName;
+                    return File.ReadAllText(openFile.FileName);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.StackTrace, e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="json"></param>
+        public static void SaveFileAs(string json)
+        {
+            var saveFile = new SaveFileDialog { Filter = "Files (*.json)|*.json|All Files (*.*)|*.*" };
+            if (saveFile.ShowDialog() == true)
+            {
+                try
+                {
+                    File.WriteAllText(saveFile.FileName, json);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

@@ -62,6 +62,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\ScreenUtil.cs" />
+    <Compile Include="Utils\Win32\Standard\ComGuids.cs" />
+    <Compile Include="Utils\Win32\Standard\Debug.cs" />
+    <Compile Include="Utils\Win32\Standard\DoubleUtil.cs" />
+    <Compile Include="Utils\Win32\Standard\DpiHelper.cs" />
+    <Compile Include="Utils\Win32\Standard\ErrorCodes.cs" />
+    <Compile Include="Utils\Win32\Standard\MessageWindow.cs" />
+    <Compile Include="Utils\Win32\Standard\NativeMethods.cs" />
+    <Compile Include="Utils\Win32\Standard\NtDll.cs" />
+    <Compile Include="Utils\Win32\Standard\ShellProvider.cs" />
+    <Compile Include="Utils\Win32\Standard\StreamHelper.cs" />
+    <Compile Include="Utils\Win32\Standard\Utilities.cs" />
+    <Compile Include="Utils\Win32\Standard\Utilities.Windows.cs" />
+    <Compile Include="Utils\Win32\Standard\Utilities.Wpf.cs" />
+    <Compile Include="Utils\Win32\Standard\Verify.cs" />
+    <Compile Include="Utils\Win32\Standard\WinApiHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,6 +89,7 @@
     </Compile>
     <Compile Include="Utils\JsonUtil.cs" />
     <Compile Include="Utils\Util.cs" />
+    <Compile Include="Utils\Win32\DpiHelper.cs" />
     <Compile Include="Utils\Win32\HotKeyManager.cs" />
     <Compile Include="Utils\Win32\MouseHook.cs" />
     <Compile Include="MainWindow.xaml.cs">

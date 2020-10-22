@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:Mouser"
         mc:Ignorable="d"
         Topmost="True"
-        Title="MainWindow" Height="120" Width="300">
+        Title="Mouser" Height="120" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
@@ -19,12 +21,18 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="1"/>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="0"/>
 
-        <Button x:Name="BtnStart" Grid.Column="0" Grid.Row="1" Content="Start" Click="BtnStart_OnClick"/>
-        <Button x:Name="BtnEnd"   Grid.Column="1" Grid.Row="1" Content="End" Click="BtnEnd_OnClick"/>
-        <Button x:Name="BtnPlay"  Grid.Column="2" Grid.Row="1" Content="Play" Click="BtnPlay_OnClick"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Center"
+                   FontSize="20"
+                   Text="Alt+F12结束播放"/>
 
-        <TextBlock x:Name="TbkInfo" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <Button x:Name="BtnStart" BorderThickness="0" Grid.Column="0" Grid.Row="1" Content="Start" Click="BtnStart_OnClick"/>
+        <Button x:Name="BtnEnd"   BorderThickness="0" Grid.Column="1" Grid.Row="1" Content="End" Click="BtnEnd_OnClick"/>
+        <Button x:Name="BtnPlay"  BorderThickness="0" Grid.Column="2" Grid.Row="1" Content="Play" Click="BtnPlay_OnClick"/>
+        <Button x:Name="BtnSave"  BorderThickness="0" Grid.Column="3" Grid.Row="1" Content="Save" Click="BtnSave_OnClick"/>
+        <Button x:Name="BtnLoad"  BorderThickness="0" Grid.Column="4" Grid.Row="1" Content="Load" Click="BtnLoad_OnClick"/>
+
+        <TextBlock x:Name="TbkInfo" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
     </Grid>
 </Window>

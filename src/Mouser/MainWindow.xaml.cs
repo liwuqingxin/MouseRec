@@ -12,6 +12,7 @@ using Mouser.Models;
 using Mouser.Utils;
 using Mouser.Utils.Win32;
 using Action = Mouser.Models.Action;
+using MessageBox = System.Windows.Forms.MessageBox;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace Mouser
@@ -106,8 +107,6 @@ namespace Mouser
         private void BtnEnd_OnClick(object sender, RoutedEventArgs e)
         {
             _mouseHook.Stop();
-            var json = JsonUtil.SerializeByNsj(_currentRecord);
-            File.WriteAllText($"./{DateTime.Now:yyyy_MM_dd HHmmss}_record.json", json);
         }
 
         private void OnMouseActivity(object sender, MouseEventArgs args)
@@ -127,7 +126,7 @@ namespace Mouser
 
             _last = DateTime.Now;
             _currentRecord.ActionList.Add(action);
-            TbkInfo.Text = $"{_lastExceptMove = DateTime.Now:HH:mm:ss fff} {args.Clicks}, {args.X}, {args.Y}";
+            TbkInfo.Text = $"[{_lastExceptMove = DateTime.Now:HH:mm:ss fff}] [Click:{args.Clicks}], [X:{args.X}, Y:{args.Y}]";
         }
 
         #endregion
@@ -155,8 +154,12 @@ namespace Mouser
                     if (_stopPlaying) return;
 
                     // 模拟移动
-                    MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_ABSOLUTE | MouseSimulator.MOUSEEVENTF_MOVE, t.Point.X * 65536 / 3840, t.Point.Y * 65536 / 2160, 0, 0);
-                    
+                    var point = ScreenUtil.TransformPxToDx(t.Point);
+                    if (point != null)
+                    {
+                        MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_ABSOLUTE | MouseSimulator.MOUSEEVENTF_MOVE, point.Value.X, point.Value.Y, 0, 0);
+                    }
+
                     switch (t.ActionType)
                     {
                         case ActionTypes.Up:
@@ -194,6 +197,22 @@ namespace Mouser
                             }
                             break;
                         case ActionTypes.Click:
+                            if (t.MouseButton == MouseButtons.Left)
+                            {
+                                MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                            }
+                            else if (t.MouseButton == MouseButtons.Right)
+                            {
+                                MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                            }
+                            else if (t.MouseButton == MouseButtons.Middle)
+                            {
+                                MouseSimulator.mouse_event(MouseSimulator.MOUSEEVENTF_MIDDLEDOWN, 0, 0, 0, 0);
+                                _mask.ShowClick(_mask.EffectLeftDown, t.Point);
+                            }
+                            break;
                         case ActionTypes.DClick:
                             // TODO 暂未处理
                             break;
@@ -207,6 +226,39 @@ namespace Mouser
             _stopPlaying = true;
             Canvas.SetLeft(_mask.EffectLeftUp, -10000);
             Canvas.SetLeft(_mask.EffectLeftDown, -10000);
+        }
+
+        #endregion
+
+
+
+        #region 保存 & 加载
+
+        private void BtnSave_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var json = JsonUtil.SerializeByNsj(_currentRecord);
+                Util.SaveFileAs(json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnLoad_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var json = Util.OpenFile(out _);
+                if (string.IsNullOrEmpty(json)) return;
+                _currentRecord = JsonUtil.DeserializeByNsj<Record>(json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion

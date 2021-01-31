@@ -1,3 +1,12 @@
+<div align="left">
+  <a href="http://www.gnu.org/licenses/agpl-3.0.en.html">
+    <img src="https://img.shields.io/badge/LICENSE-GNU%20AGPL-red">
+  </a>
+    <a href="https://www.cnblogs.com/liwuqingxin/">
+    <img src="https://img.shields.io/badge/BLOG-NLNet-green">
+  </a>
+</div>
+
 # MouseRec
 
 这个项目一开始的目的是，做一个单纯录制鼠标动作并支持自动重复执行的小工具。

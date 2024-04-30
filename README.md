@@ -17,5 +17,5 @@ Emmmm，其实是因为 ***ReMouse*** 我没有破解版，只能重复播放动
 
 当然，后续会持续更新了，更新时间的话得看心情了。
 
-![./imghost/ui.jpg](./imghost/ui.jpg)
+![./imghost/ui.png](./imghost/ui.png)
 

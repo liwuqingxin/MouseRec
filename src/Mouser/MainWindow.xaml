@@ -6,33 +6,86 @@
         xmlns:local="clr-namespace:Mouser"
         mc:Ignorable="d"
         Topmost="True"
-        Title="Mouser" Height="120" Width="400">
+        ResizeMode="NoResize"
+        Title="Mouser"
+        Height="220"
+        Width="450">
     <Grid x:Name="LayoutRoot">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="BorderThickness" Value="0.5"/>
+                <!--<Setter Property="BorderBrush" Value="CornflowerBlue"/>-->
+                <!--<Setter Property="Background" Value="#FFF5F5FF"/>-->
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="CornflowerBlue"/>
+                        <Setter Property="BorderBrush" Value="CornflowerBlue"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
 
-        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="0"/>
+        <ProgressBar x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" BorderThickness="0" Height="5" Background="Transparent"/>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Center"
-                   FontSize="20"
-                   Text="Alt+F12结束播放"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" 
+                    BorderThickness="0"
+                    Margin="10"
+                    Padding="10"
+                    Cursor="Hand"
+                    Click="BtnToolSpeed_OnClick"
+                    Background="Transparent"
+                    HorizontalAlignment="Left">
+                <Image Source="Resources/toolspeed.png" Stretch="Uniform" Width="32" Height="32"/>
+            </Button>
+            <Button Grid.Column="1" 
+                    BorderThickness="0"
+                    Margin="10"
+                    Padding="10"
+                    Cursor="Hand"
+                    Click="BtnGithub_OnClick"
+                    Background="Transparent"
+                    HorizontalAlignment="Left">
+                <Image Source="Resources/github.png" Height="32" Width="32"/>
+            </Button>
+            <TextBlock Grid.Column="2" 
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       Margin="10"
+                       Text="Alt + F12 结束播放"/>
+        </Grid>
 
-        <Button x:Name="BtnStart" BorderThickness="0" Grid.Column="0" Grid.Row="1" Content="Start" Click="BtnStart_OnClick"/>
-        <Button x:Name="BtnEnd"   BorderThickness="0" Grid.Column="1" Grid.Row="1" Content="End" Click="BtnEnd_OnClick"/>
-        <Button x:Name="BtnPlay"  BorderThickness="0" Grid.Column="2" Grid.Row="1" Content="Play" Click="BtnPlay_OnClick"/>
-        <Button x:Name="BtnSave"  BorderThickness="0" Grid.Column="3" Grid.Row="1" Content="Save" Click="BtnSave_OnClick"/>
-        <Button x:Name="BtnLoad"  BorderThickness="0" Grid.Column="4" Grid.Row="1" Content="Load" Click="BtnLoad_OnClick"/>
+        <TextBlock x:Name="TbkInfo" Grid.Row="3" Grid.Column="0" Margin="10,0"/>
 
-        <TextBlock x:Name="TbkInfo" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"/>
+        <Grid Grid.Row="4" Grid.Column="0" Margin="2,10,2,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BtnStart" Grid.Column="0" Content="录制 &#x000D; Alt + F9" Click="BtnStart_OnClick" TextBlock.TextAlignment="Center"/>
+            <Button x:Name="BtnEnd"   Grid.Column="1" Content="停止 &#x000D; Alt + F10" Click="BtnEnd_OnClick" TextBlock.TextAlignment="Center"/>
+            <Button x:Name="BtnPlay"  Grid.Column="2" Content="播放" Click="BtnPlay_OnClick"/>
+            <Button x:Name="BtnSave"  Grid.Column="3" Content="保存" Click="BtnSave_OnClick"/>
+            <Button x:Name="BtnLoad"  Grid.Column="4" Content="加载" Click="BtnLoad_OnClick"/>
+        </Grid>
     </Grid>
 </Window>

@@ -62,9 +62,11 @@ namespace Mouser
             base.OnSourceInitialized(e);
 
             var handle = new WindowInteropHelper(this).Handle;
+            HotKeyManager.RegisterHotKey(handle, HotKeyManager.WM_HOTKEY_RECORD_START, HotKeyManager.MOD_ALT, HotKeyManager.VK_F9);
+            HotKeyManager.RegisterHotKey(handle, HotKeyManager.WM_HOTKEY_RECORD_STOP, HotKeyManager.MOD_ALT, HotKeyManager.VK_F10);
             HotKeyManager.RegisterHotKey(handle, HotKeyManager.WM_HOTKEY_START, HotKeyManager.MOD_ALT, HotKeyManager.VK_F11);
             HotKeyManager.RegisterHotKey(handle, HotKeyManager.WM_HOTKEY_STOP,  HotKeyManager.MOD_ALT, HotKeyManager.VK_F12);
-
+            
             // HwndSource source = HwndSource.FromHwnd(handle);
             HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
             source?.AddHook(WndProc);
@@ -78,6 +80,12 @@ namespace Mouser
             {
                 switch (wParam.ToInt32())
                 {
+                    case HotKeyManager.WM_HOTKEY_RECORD_START:
+                        StartRecoding();
+                        break;
+                    case HotKeyManager.WM_HOTKEY_RECORD_STOP:
+                        StopRecoding();
+                        break;
                     case HotKeyManager.WM_HOTKEY_START:
 
                         break;
@@ -101,16 +109,34 @@ namespace Mouser
 
         private void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
-            _currentRecord = new Record()
+            StartRecoding();
+        }
+
+        private void StartRecoding()
+        {
+            Dispatcher.Invoke(() =>
             {
-                BeginTime = _last = DateTime.Now,
-            };
-            _mouseHook.Start();
+                _currentRecord = new Record()
+                {
+                    BeginTime = _last = DateTime.Now,
+                };
+                _mouseHook.Start();
+                ProgressBar.IsIndeterminate = true;
+            });
         }
 
         private void BtnEnd_OnClick(object sender, RoutedEventArgs e)
         {
-            _mouseHook.Stop();
+            StopRecoding();
+        }
+
+        private void StopRecoding()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                _mouseHook.Stop();
+                ProgressBar.IsIndeterminate = false;
+            });
         }
 
         private void OnMouseActivity(object sender, MouseEventArgs args)
@@ -262,6 +288,22 @@ namespace Mouser
             {
                 MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        #endregion
+
+
+
+        #region 超链接
+
+        private void BtnGithub_OnClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/liwuqingxin/MouseRec");
+        }
+
+        private void BtnToolSpeed_OnClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.devtools.nlnet.net");
         }
 
         #endregion

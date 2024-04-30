@@ -23,6 +23,8 @@ namespace Mouser.Utils.Win32
         // Id of our hot keys.
         public const int WM_HOTKEY_START = 0x0001;
         public const int WM_HOTKEY_STOP  = 0x0002;
+        public const int WM_HOTKEY_RECORD_START = 0x0003;
+        public const int WM_HOTKEY_RECORD_STOP = 0x0004;
 
         // virtual-key
         // https://docs.microsoft.com/zh-cn/windows/win32/inputdev/virtual-key-codes?redirectedfrom=MSDN
